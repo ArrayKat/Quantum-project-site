@@ -3,13 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Document Preview</title>
 </head>
 <body>
     <a href="./presentation/vkr.docx">Документ .docx</a>
     <a href="./presentation/английский.pptx">Презентация .pptx</a>
     <a href="./presentation/Методичка_ВКР_2019-2020.pdf">Документ .pdf</a>
 
-    
+    <h1>Документ .pdf</h1>
+    <iframe src="./presentation/Методичка_ВКР_2019-2020.pdf" width="100%" height="600px"></iframe>
+    <h1>Документ .pdf</h1>
+    <iframe src="./presentation/астероиды 12п.pptx.pdf" width="100%" height="800зч"></iframe>
+
+    <h1>Презентация .pptx</h1>
+    <div id="ppt-preview">
+        <p>Превью PPTX недоступно в браузере. Скачайте файл для просмотра.</p>
+    </div>
+
+    <h1>Документ .docx</h1>
+    <div id="docx-preview"></div>
+
+    <!-- Подключаем Mammoth.js для работы с DOCX -->
+    <script src="https://cdn.jsdelivr.net/npm/mammoth@1.4.8/mammoth.browser.min.js"></script>
+    <script>
+        // Отображение DOCX
+        fetch('./presentation/vkr.docx')
+            .then(response => response.arrayBuffer())
+            .then(arrayBuffer => mammoth.convertToHtml({ arrayBuffer }))
+            .then(result => {
+                document.getElementById('docx-preview').innerHTML = result.value;
+            })
+            .catch(error => {
+                console.error('Ошибка при загрузке DOCX:', error);
+                document.getElementById('docx-preview').innerHTML = '<p>Не удалось загрузить DOCX файл.</p>';
+            });
+    </script>
 </body>
 </html>
